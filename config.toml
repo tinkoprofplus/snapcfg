@@ -1,0 +1,16 @@
+# snapcfg - Game Settings
+# Edit this file while the game is running, changes will be reflected instantly!
+
+[player]
+health     = 100.0
+speed      = 5.5
+jump_force = 8.0
+
+[world]
+enemy_count   = 10
+gravity       = -9.81
+debug_enabled = false
+
+[renderer]
+target_fps = 60
+fov        = 90.0

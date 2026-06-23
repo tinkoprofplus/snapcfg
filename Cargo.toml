@@ -1,0 +1,45 @@
+[workspace]
+members = [".", "snapcfg-macros"]
+
+[package]
+name = "snapcfg"
+version = "0.1.0"
+edition = "2026"
+description = "Minimal, high-performance hot-reloading config library for game loops"
+license = "MIT"
+repository = "https://github.com/your-username/snapcfg"
+keywords = ["hot-reload", "config", "game", "toml", "async"]
+categories = ["config", "game-engines"]
+
+[dependencies]
+# TOML parsing + Serde deserialization (preserve = field-level for Value access)
+toml = { version = "0.8", features = [] }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+# File system monitoring (cross-platform, except WASM)
+notify = { version = "6.1", features = ["serde"] }
+
+# Our own proc-macro crate
+snapcfg-macros = { path = "snapcfg-macros" }
+serde = { version = "1.0", features = ["derive"] }
+
+# Thread-safe signal channel (more ergonomic than std::sync::mpsc)
+crossbeam-channel = "0.5"
+
+# Error management
+thiserror = "1.0"
+
+# Logging (optional, for game loop demo)
+log = "0.4"
+env_logger = "0.11"
+
+[dev-dependencies]
+# Temporary file management for integration tests
+tempfile = "3.10"
+
+[profile.release]
+# For game engines: aggressive optimization
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
